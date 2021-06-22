@@ -1,8 +1,8 @@
 
 
 const express = require('express'),
-app = express(),
-morgan = require('morgan');
+app = express();
+const morgan = require('morgan');
 
 const bodyParser = require('body-parser'),
   methodOverride = require('method-override');
