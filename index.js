@@ -11,33 +11,101 @@ const bodyParser = require('body-parser'),
 app.use(morgan('common'));
 
 
-let topBooks = [
+let movies = [
   {
-    title: 'Harry Potter and the Sorcerer\'s Stone',
-    author: 'J.K. Rowling'
+    id: 1,
+    title: 'The Snake',
+    director: {name : 'John Carpenter',
+    born: '1953'},
+    genre: 'Dystopian Science Fiction'
   },
   {
-    title: 'Lord of the Rings',
-    author: 'J.R.R. Tolkien'
+    id: 2,
+    title: 'Alien',
+    director: {name : 'Ridley Scott',
+       born: '1940'},
+    genre: 'Science Fiction'
   },
   {
-    title: 'Twilight',
-    author: 'Stephanie Meyer'
-  }
+    id: 3,
+    title: 'Cabaret',
+    director: {name : 'Liza Minelli',
+    born: '1839'},
+    genre: 'Musical'
+    }
 ];
 
-// GET requests
-app.get('/', (req, res) => {
-  res.send('Welcome to my book club!');
+let users = [];
+
+// list of  ALL movies - works but returns whole list
+
+app.get('/movies', (req, res) => {
+  res.json(movies);
 });
+
+// return all available data about one movie
+app.get('/movies/:title', (req, res) => {
+  res.json(movies);
+});
+
+// return genre of movie
+app.get('/movies/:genre', (req, res) => {
+  res.json(movies);
+});
+
+// return director's bio
+app.get('/movies/:director', (req, res) => {
+  res.json(movies);
+});
+
+//Allow new users to register
+app.post('/users', (req, res) => {
+  let newUser = req.body;
+  
+  if (!newUser.name) {
+    const message = 'Missing "name" in request body';
+    res.status(400).send(message);
+  } else {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    res.status(201).send(newUser);
+  }
+});
+
+
+
+
+
+//Allow users to update their user info (username)
+app.put('/users/:username'), (req, res) => {
+  res.json(movies);
+}
+
+
+//Allow users to add a movie to their list of favorites
+app.put('/users/:username/:favourites'), (req, res) => {
+  res('Show text that list has been created');
+}
+
+//Allow users to remove a movie to their list of favorites
+app.patch('/users/:username/:favourites'), (req, res) => {
+  res('Show text that list has been altered');
+}
+
+
+//allow user to delete their accounnt (by id):
+app.delete('/users/:id'), (req, res) => {
+  res.delete('delete user account'); 
+}
+
+
+
 
 app.get('/documentation', (req, res) => {                  
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
-app.get('/books', (req, res) => {
-  res.json(topBooks);
-});
+
 
 app.use(express.static('public'));
 

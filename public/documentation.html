@@ -3,16 +3,149 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Movie App</title>
-    
+    <title>Movie API</title>
+   
+    <style>
+        body{
+            box-sizing: border-box;
+            margin: 10vw;
+        }
+  
+        th,td{
+            padding:1vw;
+            text-align: left;
+            border-bottom: 1px solid rgb(128, 126, 126);   
+        }
+
+        th{
+            background-color: rgb(196, 197, 197);
+        }
+
+        td{
+            background-color: rgb(207, 209, 209);
+        }
+         
+    </style>
+
   </head>
 
 
-  <body>
-<h1>MOVIE API</h1>
+<body>
+  <h1>MOVIE API</h1>
 
-<p>This is a server-side component of a “movies” web application. The web application will provide users with access to information about different movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.</p>
+  <p>This is a server-side component of a “movies” web application. The web application will provide users with access to information about different movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.</p>
 
-  </body>
+
+
+  <table class="movies-api-endpoints">
+        <thead>
+          <tr>
+            <th>REQUEST</th>
+            <th>HTTP METHOD</th>
+            <th>ENDPOINT URL</th>
+            <th>REQUEST BODY DATA FORMAT</th>
+            <th>RESPONSE BODY DATA FORMAT</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+              <td>List ALL movies</td>
+              <td>GET</td>
+              <td>/movies</td>
+              <td>NONE</td>
+              <td>JSON object with list of ALL movies available on the datatbase</td>
+            </tr>
+
+            <tr>
+              <td>Return available data details about a single movie by title to the user</td>
+              <td>GET</td>
+              <td>/movies/:title</td>
+              <td>NONE</td>
+              <td>JSON object with description, genre, director, image URL??.
+              </td>
+            </tr>
+            
+            <tr>
+              <td>Return type of genre by name/title (e.g., “Thriller”)</td>
+              <td>GET</td>
+              <td>movies/:genre</td>
+              <td>NONE</td>
+              <td>Return type/description of genre of </td>
+            </tr>
+            
+            <tr>
+              <td>Return Director's Bio</td>
+              <td>GET</td>
+              <td>movies/:director</td>
+              <td>NONE</td>
+              <td>Return JSON object containing data about a director (bio, birth year, death year) by name</td>
+            </tr>
+
+            <tr>
+              <td>Register a new user</td>
+              <td>POST</td>
+              <td>/users</td>
+              <td>A JSON object holding data about the new user, structured like:
+                {
+                name : "", 
+                email: "",
+                password : "",
+                }</td>
+              <td>A JSON object holding data about the new user, including an ID
+                { id: X,
+                  name : "", 
+                  email: "",
+                  password : "",
+                  }</td>
+            </tr>
+            
+            <tr>
+              <td>User to update their own info</td>
+              <td>PUT</td>
+              <td>/users/:username</td>
+              <td>NONE</td>
+              <td>An updated JSON object holding altered data about the user, including an ID
+                { id: X,
+                  name : "XX", 
+                  password : "XXX"
+                  }</td>
+            </tr>
+
+
+            <tr>
+              <td>Add Movie to favorites List</td>
+              <td>PUT</td>
+              <td>/users/:username/:favourites</td>
+              <td>NONE</td>
+              <td>Creates a favourite list. Showing a text that a movie had been added</td>
+            </tr>
+            
+            
+            <tr>
+              <td>Remove Movie from Favorites List</td>
+              <td>PATCH??</td>
+              <td>/users/:username/:favourites</td>
+              <td>NONE</td>
+              <td>Removes a movie from the users favorites list, Showing a text that a movie had been removed</td>
+            </tr>
+
+            <tr>
+              <td>Delete account</td>
+              <td>DELETE</td>
+              <td>/users/:id</td>
+              <td>NONE</td>
+              <td>Allows a user delete their account</td>
+            </tr>
+         
+        </tbody>
+  </table>
+
+
+
+
+
+
+</body>
 
 </html>
