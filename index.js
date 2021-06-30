@@ -13,21 +13,21 @@ app.use(morgan('common'));
 
 let movies = [
   {
-    id: 1,
+    movieId: 1,
     title: 'The Snake',
     director: {name : 'John Carpenter',
     born: '1953'},
     genre: 'Dystopian Science Fiction'
   },
   {
-    id: 2,
+    movieId: 2,
     title: 'Alien',
     director: {name : 'Ridley Scott',
        born: '1940'},
     genre: 'Science Fiction'
   },
   {
-    id: 3,
+    movieId: 3,
     title: 'Cabaret',
     director: {name : 'Liza Minelli',
     born: '1839'},
@@ -35,7 +35,19 @@ let movies = [
     }
 ];
 
-let users = [];
+let users = [
+  {
+    userId: 1,
+    name: 'Klaus Wehner'
+  }
+];
+
+let directors = [
+  {
+    directorId: 1,
+    name: 'John Carpenter'
+  }
+];
 
 // list of  ALL movies - works but returns whole list
 
@@ -44,17 +56,20 @@ app.get('/movies', (req, res) => {
 });
 
 // return all available data about one movie
+//  ???
 app.get('/movies/:title', (req, res) => {
-  res.json(movies);
+  res.json(movies.find((title) =>
+    { return title.name === req.params.name }));
 });
-
+  
+ 
 // return genre of movie
 app.get('/movies/:genre', (req, res) => {
   res.json(movies);
 });
 
 // return director's bio
-app.get('/movies/:director', (req, res) => {
+app.get('/directors/:directorId', (req, res) => {
   res.json(movies);
 });
 
@@ -83,18 +98,18 @@ app.put('/users/:username'), (req, res) => {
 
 
 //Allow users to add a movie to their list of favorites
-app.put('/users/:username/:favourites'), (req, res) => {
+app.put('/users/:username/:movieId'), (req, res) => {
   res('Show text that list has been created');
 }
 
 //Allow users to remove a movie to their list of favorites
-app.patch('/users/:username/:favourites'), (req, res) => {
+app.patch('/users/:username/:movieId'), (req, res) => {
   res('Show text that list has been altered');
 }
 
 
 //allow user to delete their accounnt (by id):
-app.delete('/users/:id'), (req, res) => {
+app.delete('/users/'), (req, res) => {
   res.delete('delete user account'); 
 }
 
