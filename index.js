@@ -1,14 +1,24 @@
-
-
 const express = require('express'),
 app = express();
 const morgan = require('morgan');
-
 const bodyParser = require('body-parser'),
-  methodOverride = require('method-override');
+methodOverride = require('method-override');
 
 
 app.use(morgan('common'));
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(express.static('public'));
+
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 
 let movies = [
@@ -17,37 +27,32 @@ let movies = [
     title: 'The Snake',
     director: {name : 'John Carpenter',
     born: '1953'},
-    genre: 'Dystopian Science Fiction'
+    genre: {name: 'Dystopian Science Fiction'}
   },
   {
     movieId: 2,
     title: 'Alien',
     director: {name : 'Ridley Scott',
        born: '1940'},
-    genre: 'Science Fiction'
+    genre: {name: 'Science Fiction'}
   },
   {
     movieId: 3,
     title: 'Cabaret',
     director: {name : 'Liza Minelli',
     born: '1839'},
-    genre: 'Musical'
+    genre: {name: 'Musical'}
     }
 ];
 
 let users = [
   {
     userId: 1,
-    name: 'Klaus Wehner'
+    username: 'Klaus Wehner'
   }
 ];
 
-let directors = [
-  {
-    directorId: 1,
-    name: 'John Carpenter'
-  }
-];
+
 
 // list of  ALL movies - works but returns whole list
 
@@ -56,20 +61,20 @@ app.get('/movies', (req, res) => {
 });
 
 // return all available data about one movie
-//  ???
+//  Always returns first movie on the list ?
 app.get('/movies/:title', (req, res) => {
-  res.json(movies.find((title) =>
-    { return title.name === req.params.name }));
+  res.json(movies.find((movie) =>
+    { return movie.title === req.params.name }));
 });
   
  
 // return genre of movie
-app.get('/movies/:genre', (req, res) => {
+app.get('/movies/genre/:name', (req, res) => {
   res.json(movies);
 });
 
 // return director's bio
-app.get('/directors/:directorId', (req, res) => {
+app.get('movies/director/:name', (req, res) => {
   res.json(movies);
 });
 
@@ -87,10 +92,6 @@ app.post('/users', (req, res) => {
   }
 });
 
-
-
-
-
 //Allow users to update their user info (username)
 app.put('/users/:username'), (req, res) => {
   res.json(movies);
@@ -98,12 +99,12 @@ app.put('/users/:username'), (req, res) => {
 
 
 //Allow users to add a movie to their list of favorites
-app.put('/users/:username/:movieId'), (req, res) => {
+app.put('/users/:username/movies/:movieId'), (req, res) => {
   res('Show text that list has been created');
 }
 
 //Allow users to remove a movie to their list of favorites
-app.patch('/users/:username/:movieId'), (req, res) => {
+app.patch('/users/:username/movies/:movieId'), (req, res) => {
   res('Show text that list has been altered');
 }
 
@@ -113,32 +114,9 @@ app.delete('/users/'), (req, res) => {
   res.delete('delete user account'); 
 }
 
-
-
-
 app.get('/documentation', (req, res) => {                  
   res.sendFile('public/documentation.html', { root: __dirname });
 });
-
-
-
-app.use(express.static('public'));
-
-
-
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-app.use(bodyParser.json());
-app.use(methodOverride());
-
-app.use((err, req, res) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-
 
 
 // listen for requests
