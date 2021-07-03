@@ -61,58 +61,51 @@ app.get('/movies', (req, res) => {
 });
 
 // return all available data about one movie
-//  Always returns first movie on the list ?
+
 app.get('/movies/:title', (req, res) => {
   res.json(movies.find((movie) =>
-    { return movie.title === req.params.name }));
+    { return movie.title === req.params.title }));
 });
   
  
 // return genre of movie
 app.get('/movies/genre/:name', (req, res) => {
-  res.json(movies);
+  res.json(movies.find((movie) =>
+    { return movie.genre.name === req.params.genre.name }));
 });
 
 // return director's bio
 app.get('movies/director/:name', (req, res) => {
-  res.json(movies);
+  res.send('More here soon!');
 });
 
 //Allow new users to register
 app.post('/users', (req, res) => {
-  let newUser = req.body;
-  
-  if (!newUser.name) {
-    const message = 'Missing "name" in request body';
-    res.status(400).send(message);
-  } else {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).send(newUser);
-  }
+  res.send('More here soon!');
 });
 
 //Allow users to update their user info (username)
-app.put('/users/:username'), (req, res) => {
-  res.json(movies);
-}
+app.put('/users/:username', (req, res) => {
+  res.send('More here soon!');
+});
 
 
 //Allow users to add a movie to their list of favorites
-app.put('/users/:username/movies/:movieId'), (req, res) => {
-  res('Show text that list has been created');
-}
+app.put('/users/:username/movies/:movieId', (req, res) => {
+  res.send('Show text that list has been created');
+};
 
 //Allow users to remove a movie to their list of favorites
-app.patch('/users/:username/movies/:movieId'), (req, res) => {
-  res('Show text that list has been altered');
-}
+app.patch('/users/:username/movies/:movieId', (req, res) => {
+  res.send('Show text that list has been altered');
+};
 
 
-//allow user to delete their accounnt (by id):
-app.delete('/users/'), (req, res) => {
-  res.delete('delete user account'); 
-}
+// //allow user to delete their accounnt (by id):
+
+app.delete('/users/:username', (req, res) => {
+  res.send('update user account')
+  }); 
 
 app.get('/documentation', (req, res) => {                  
   res.sendFile('public/documentation.html', { root: __dirname });
