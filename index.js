@@ -77,7 +77,7 @@ app.get('/movies/genre/:name', (req, res) => {
 // return director's bio
 app.get('/movies/director/:name', (req, res) => {
   res.json(movies.find((movie) =>
-  {return movie.direcror.name === req.params.name }));
+  {return movie.director.name === req.params.name }));
 
 });
 
