@@ -71,12 +71,14 @@ app.get('/movies/:title', (req, res) => {
 // return genre of movie
 app.get('/movies/genre/:name', (req, res) => {
   res.json(movies.find((movie) =>
-    { return movie.genre.name === req.params.genre.name }));
+    { return movie.genre.name === req.params.name }));
 });
 
 // return director's bio
-app.get('movies/director/:name', (req, res) => {
-  res.send('More here soon!');
+app.get('/movies/director/:name', (req, res) => {
+  res.json(movies.find((movie) =>
+  {return movie.direcror.name === req.params.name }));
+
 });
 
 //Allow new users to register
@@ -93,12 +95,12 @@ app.put('/users/:username', (req, res) => {
 //Allow users to add a movie to their list of favorites
 app.put('/users/:username/movies/:movieId', (req, res) => {
   res.send('Show text that list has been created');
-};
+});
 
 //Allow users to remove a movie to their list of favorites
 app.patch('/users/:username/movies/:movieId', (req, res) => {
   res.send('Show text that list has been altered');
-};
+});
 
 
 // //allow user to delete their accounnt (by id):
