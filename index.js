@@ -68,13 +68,13 @@ app.get('/movies/:title', (req, res) => {
 });
   
  
-// return genre of movie
+// return movie/s by genre
 app.get('/movies/genre/:name', (req, res) => {
   res.json(movies.find((movie) =>
     { return movie.genre.name === req.params.name }));
 });
 
-// return director's bio
+// return movie by director
 app.get('/movies/director/:name', (req, res) => {
   res.json(movies.find((movie) =>
   {return movie.director.name === req.params.name }));
