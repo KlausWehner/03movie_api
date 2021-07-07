@@ -19,53 +19,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-
 app.use(morgan('common'));
-
-
-
 app.use(express.static('public'));
 
-app.use(bodyParser.json());
 app.use(methodOverride());
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
-
-
-// let movies = [
-//   {
-//     movieId: 1,
-//     title: 'The Snake',
-//     director: {name : 'John Carpenter',
-//     born: '1953'},
-//     genre: {name: 'Dystopian Science Fiction'}
-//   },
-//   {
-//     movieId: 2,
-//     title: 'Alien',
-//     director: {name : 'Ridley Scott',
-//        born: '1940'},
-//     genre: {name: 'Science Fiction'}
-//   },
-//   {
-//     movieId: 3,
-//     title: 'Cabaret',
-//     director: {name : 'Liza Minelli',
-//     born: '1839'},
-//     genre: {name: 'Musical'}
-//     }
-// ];
-
-// let users = [
-//   {
-//     userId: 1,
-//     username: 'Klaus Wehner'
-//   }
-// ];
-
 
 
 // list of  ALL movies - works but returns whole list
