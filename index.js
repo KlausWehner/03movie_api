@@ -6,7 +6,7 @@ const Users = Models.User;
 
 
 //I don't think this is connected to the database. Is this path and localhost-number correct? I tried 8080 too. Didn't work either. Considering my previous issue?... 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express'),
 app = express();
@@ -34,8 +34,8 @@ app.use((err, req, res, next) => {
 // Return a list of ALL movies to the user
 app.get('/movies', (req, res) => {
   Movies.find()
-  .then((movies) => {
-    res.status(201).json(movies);
+  .then((allmovies) => {
+    res.status(201).json(allmovies);
   })
   .catch((err) => {
     console.error(err);
@@ -47,8 +47,8 @@ app.get('/movies', (req, res) => {
 // Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:Title', (req, res) => {
   Movies.findOne( { Title: req.params.Title })
-  .then( (movie) => {
-    res.json(movie);
+  .then( (requestedmovie) => {
+    res.json(requestedmovie);
   })
   .catch((err) => {
     console.error(err);
@@ -60,8 +60,8 @@ app.get('/movies/:Title', (req, res) => {
 // Return data about a genre (description) by name/title (e.g., “Thriller”)
 app.get('/movies/:Genre', (req, res) => {
   Movies.findOne( { Genre: req.params.Genre })
-  .then( (genre) => {
-    res.json(genre);
+  .then( (requestedgenre) => {
+    res.json(requestedgenre);
   })
   .catch((err) => {
     console.error(err);
@@ -73,8 +73,8 @@ app.get('/movies/:Genre', (req, res) => {
 // Return data about a director by name 
 app.get('/movies/:Director', (req, res) => {
   Movies.findOne( { Director: req.params.Director })
-  .then( (director) => {
-    res.json(director);
+  .then( (requesteddirector) => {
+    res.json(requesteddirector);
   })
   .catch((err) => {
     console.error(err);
