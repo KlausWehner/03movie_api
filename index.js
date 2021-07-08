@@ -56,7 +56,7 @@ app.get('/movies/:Title', (req, res) => {
   });
 });
   
-// ??????????
+// ?????????? 
 // Return data about a genre (description) by name/title (e.g., “Thriller”)
 app.get('/movies/:Genre', (req, res) => {
   Movies.findOne( { Genre: req.params.Genre })
@@ -199,19 +199,6 @@ app.get('/users/:Username', (req, res) => {
     res.status(500).send('Error: ' + err);
   });
 });
-
-// // get all users
-
-// app.get('/users', (req, res) => {
-//   Users.find()
-//     .then((users) => {
-//       res.status(201).json(users);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send('Error: ' + err);
-//     });
-// });
 
 
 app.get('/documentation', (req, res) => {                  
