@@ -30,42 +30,68 @@ app.use((err, req, res, next) => {
 
 
 // REQUESTS TO MOVIES:
-// list of  ALL movies - works but returns whole list
 
+// Return a list of ALL movies to the user
 app.get('/movies', (req, res) => {
-  res.json(movies);
+  Movies.find()
+  .then((movies) => {
+    res.status(201).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
-// return all available data about one movie
 
-app.get('/movies/:title', (req, res) => {
-  res.json(movies.find((movie) =>
-    { return movie.title === req.params.title }));
+// Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
+app.get('/movies/:Title', (req, res) => {
+  Movies.findOne( { Title: req.params.Title })
+  .then( (movie) => {
+    res.json(movie);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
   
- 
-// return movie/s by genre
-app.get('/movies/genre/:name', (req, res) => {
-  res.json(movies.find((movie) =>
-    { return movie.genre.name === req.params.name }));
+// ??????????
+// Return data about a genre (description) by name/title (e.g., “Thriller”)
+app.get('/movies/:Genre', (req, res) => {
+  Movies.findOne( { Genre: req.params.Genre })
+  .then( (genre) => {
+    res.json(genre);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
-// return movie by director
-app.get('/movies/director/:name', (req, res) => {
-  res.json(movies.find((movie) =>
-  {return movie.director.name === req.params.name }));
-
+// ??????????
+// Return data about a director by name 
+app.get('/movies/:Director', (req, res) => {
+  Movies.findOne( { Director: req.params.Director })
+  .then( (director) => {
+    res.json(director);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
+
 
 
 // REQUESTS TO USERS
 
-//Allow new users to register -add new user
+// Allow new users to register
 app.post('/users', (req, res) => {
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + 'Username exists already, please choose another!');
+        return res.status(400).send(req.body.Username + ' This username exists already, please choose another!');
       } else {
         Users
           .create({
@@ -88,7 +114,7 @@ app.post('/users', (req, res) => {
 });
 
 
-//Allow users to update their user info (username)
+//Allow users to update their user info (username, password, email, date of birth)
 app.put('/users/:Username', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
@@ -125,6 +151,8 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
     }
   });
 });
+
+
 
 //Allow users to remove a movie to their list of favorites
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
