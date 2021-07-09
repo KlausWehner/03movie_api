@@ -26,11 +26,17 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 
 // REQUESTS TO MOVIES:
 
 // Return a list of ALL movies to the user
-app.get('/movies', (req, res) => {
+app.get('/movies', 
+      passport.authenticate('jwt', { session: false }),
+      (req, res) => {
   Movies.find()
   .then((allmovies) => {
     res.status(201).json(allmovies);
@@ -43,7 +49,7 @@ app.get('/movies', (req, res) => {
 
 
 // Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne( { Title: req.params.Title })
   .then( (requestedmovie) => {
     res.json(requestedmovie);
@@ -56,7 +62,7 @@ app.get('/movies/:Title', (req, res) => {
   
 // ?????????? 
 // Return data about a genre (description) by name/title (e.g., “Thriller”)
-app.get('/movies/:Genre', (req, res) => {
+app.get('/movies/:Genre', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne( { Genre: req.params.Genre })
   .then( (requestedgenre) => {
     res.json(requestedgenre);
@@ -69,7 +75,7 @@ app.get('/movies/:Genre', (req, res) => {
 
 // ??????????
 // Return data about a director by name 
-app.get('/movies/:Director', (req, res) => {
+app.get('/movies/:Director', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne( { Director: req.params.Director })
   .then( (requesteddirector) => {
     res.json(requesteddirector);
@@ -113,7 +119,7 @@ app.post('/users', (req, res) => {
 
 
 //Allow users to update their user info (username, password, email, date of birth)
-app.put('/users/:Username', (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
@@ -135,7 +141,7 @@ app.put('/users/:Username', (req, res) => {
 
 
 //Allow users to add a movie to their list of favorites
-app.post('/users/:Username', (req, res) => {
+app.post('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, {
      $push: { FavoriteMovies: req.params.MovieID }
    },
@@ -153,7 +159,7 @@ app.post('/users/:Username', (req, res) => {
 
 
 //Allow users to remove a movie to their list of favorites
-app.delete('/users/:Username', (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, {
      $pull: { FavoriteMovies: req.params.MovieID }
    },
@@ -170,6 +176,7 @@ app.delete('/users/:Username', (req, res) => {
 
 
 // //allow user to delete their accounnt by Username):
+// This worked before but doesn't now. I took out the passport param here but authorization is still required!???
 app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
@@ -187,7 +194,7 @@ app.delete('/users/:Username', (req, res) => {
 
 
 //Get a user by username:
-app.get('/users/:Username', (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({ Username: req.params.Username })
   .then((user) => {
     res.json(user);
