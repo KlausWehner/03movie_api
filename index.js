@@ -4,8 +4,6 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-
-//I don't think this is connected to the database. Is this path and localhost-number correct? I tried 8080 too. Didn't work either. Considering my previous issue?... 
 mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express'),
