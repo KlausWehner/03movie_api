@@ -33,7 +33,13 @@
 <body>
   <h1>MOVIE API</h1>
 
-  <p>This is a server-side component of a “movies” web application. The web application will provide users with access to information about different movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.</p>
+  <p>This is a server-side component of a “Movies” web application. The web application will provide users with access to information about different movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.</p>
+
+  <p>
+    <h3>LIST OF MOVIES</h3>
+    GET /movies<br>
+    Returns a list of all movies in the database
+  </p>
 
 
 
@@ -91,7 +97,7 @@
                 Username: "", 
                 Email: "",
                 Password : "",
-                Birthday: ““,
+                Birthday: "",
                 }</td>
               <td>A JSON object holding data about the new user, including an ID
                 { _id: "",
@@ -120,7 +126,7 @@
             <tr>
               <td>Add Movie to favorites List</td>
               <td>POST</td>
-              <td>/users/[Username]</td>
+              <td>/users/[Username]/favorites/[movieID]</td>
               <td>NONE</td>
               <td>Creates a favourite list. Showing a text that a movie had been added</td>
             </tr>
@@ -129,7 +135,7 @@
             <tr>
               <td>Remove Movie from Favorites List</td>
               <td>DELETE</td>
-              <td>/users/[Username]</td>
+              <td>/users/[Username]/favorites/[movieID]</td>
               <td>NONE</td>
               <td>Removes a movie from the users favorites list, Showing a text that a movie had been removed</td>
             </tr>
