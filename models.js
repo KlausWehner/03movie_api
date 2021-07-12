@@ -16,6 +16,14 @@ let movieSchema = mongoose.Schema ({
     Featured: Boolean
 });
 
+// to return just director's name + bio
+let directorSchema = mongoose.Schema ({
+    Director: {
+        name: {type: String, required: true},
+        Bio: {type: String, required: true},
+    }
+});
+
 let userSchema = mongoose.Schema ({
     Username: {type: String, required: true},
     Password: {type: String, required: true},
@@ -26,6 +34,8 @@ let userSchema = mongoose.Schema ({
 
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
+let Director = mongoose.model('Director', directorSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
+module.exports.Director = Director;

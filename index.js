@@ -3,6 +3,7 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
+const Director = Models.Director
 
 mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -60,10 +61,10 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
   });
 });
   
-// ?? Now returns first movie with that genre
-// Return data about a genre (description) by name/title (e.g., “Thriller”)
+
+// Return all movies of a genre by name/title (e.g., “Thriller”)
 app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne( { "Genre.name": req.params.name })
+  Movies.find( { "Genre.name": req.params.name })
   .then( (requestedgenre) => {
     res.json(requestedgenre);
   })
@@ -74,11 +75,24 @@ app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }),
 });
 
 
-// ?? now returns the first movie of the director 
+//returns all movies of one director 
 app.get('/movies/director/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne( { "Director.name": req.params.name })
+  Movies.find( { "Director.name": req.params.name })
   .then( (requesteddirector) => {
     res.json(requesteddirector);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
+
+
+//  return bio of director
+app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Director.findOne( { "Director.name": req.params.name })
+  .then( (directorsbio) => {
+    res.json(directorsbio);
   })
   .catch((err) => {
     console.error(err);
@@ -180,7 +194,6 @@ passport.authenticate('jwt', { session: false }),
 
 
 // //allow user to delete their accounnt by Username):
-// This worked before but doesn't now. I took out the passport param here but authorization is still required!???
 app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
