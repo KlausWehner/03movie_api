@@ -88,9 +88,9 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
 });
 
 
-//  return bio of director
+// additional:  return only name and bio of director / Does not work right
 app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Director.findOne( { "Director.name": req.params.name })
+  Director.find( { "Director.name": req.params.name })
   .then( (directorsbio) => {
     res.json(directorsbio);
   })
