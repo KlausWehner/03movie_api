@@ -5,7 +5,8 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Director = Models.Director
 
-mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express'),
 app = express();
@@ -127,12 +128,13 @@ app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: fa
 
 // Allow new users to register
 app.post('/users', (req, res) => {
-    [  
-      check('Username', 'Username is required').isLength({min: 5}),
-      check('Username', 'Non alphanumeric characters are not allowed.').isAlphanumeric(),
-      check('Password', 'Password is required').not().isEmpty(),
-      check('Email', 'Email does not appear to be valid').isEmail()
-    ], (req, res) => {
+   
+  [  
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Non alphanumeric characters are not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ], (req, res) => {
 
     // check validation object for errors
     let errors = validationResult(req);
@@ -165,7 +167,8 @@ app.post('/users', (req, res) => {
       console.error(error);
       res.status(500).send('Error: ' + error);
     });
-}});
+  }
+});
 
 
 //Allow users to update their user info (username, password, email, date of birth)
