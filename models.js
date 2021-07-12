@@ -16,7 +16,7 @@ let movieSchema = mongoose.Schema ({
     Featured: Boolean
 });
 
-// to return just director's name + bio
+// to return just director's name + bio: ?
 let directorSchema = mongoose.Schema ({
     Director: {
         name: {type: String, required: true},
