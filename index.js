@@ -165,7 +165,7 @@ app.post('/users', (req, res) => {
       console.error(error);
       res.status(500).send('Error: ' + error);
     });
-});
+}};
 
 
 //Allow users to update their user info (username, password, email, date of birth)
