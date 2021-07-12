@@ -54,6 +54,12 @@ const passport = require('passport');
 require('./passport');
 
 
+//Default Welcome
+app.get('/', (req, res) => {
+  res.send('Welcome to Klaus\' movie database');
+});
+
+
 // REQUESTS TO MOVIES:
 
 // Return a list of ALL movies to the user
