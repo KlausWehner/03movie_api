@@ -33,6 +33,7 @@ app.use((err, req, res, next) => {
 const cors = require('cors');
 app.use(cors());
 
+// to define only certain origins:
 // let allowedOrigins = ['http://localhost:8080'];
 
 // app.use(cors({
