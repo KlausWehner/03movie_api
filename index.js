@@ -5,8 +5,9 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Director = Models.Director
 
-// mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+// mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express'),
 app = express();
@@ -134,7 +135,7 @@ app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: fa
 // REQUESTS TO USERS
 
 // Allow new users to register
-app.post('/users/:Username/:Password/:Email', (req, res) => {
+app.post('/users', (req, res) => {
    
   [  
     check('Username', 'Username is required').isLength({min: 5}),
