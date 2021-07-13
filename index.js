@@ -134,7 +134,7 @@ app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: fa
 // REQUESTS TO USERS
 
 // Allow new users to register
-app.post('/users', (req, res) => {
+app.post('/users/:Username/:Password/:Email', (req, res) => {
    
   [  
     check('Username', 'Username is required').isLength({min: 5}),
