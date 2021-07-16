@@ -9,7 +9,7 @@ const Director = Models.Director
 
 
 
-mongoose.connect('mongodb+srv://MorningGlory2021:MorningGlory2021@klauscluster.g0vbh.mongodb.net/flixMoviesDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://myFlixDBadmin:Password01@myflixdb.8gcoi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express'),
 app = express();
