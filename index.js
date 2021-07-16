@@ -34,22 +34,19 @@ app.use((err, req, res, next) => {
 const cors = require('cors');
 app.use(cors());
 
-// to define only certain origins:
-// let allowedOrigins = ['http://localhost:8080'];
+// this would use cors to only give acces to selected origins
+// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 // app.use(cors({
 //   origin: (origin, callback) => {
 //     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ 
-//       // If a specific origin isn’t found on the list of allowed origins
+//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
 //       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
 //       return callback(new Error(message ), false);
 //     }
 //     return callback(null, true);
 //   }
 // }));
-
-
 
 let auth = require('./auth')(app);
 const passport = require('passport');
@@ -183,12 +180,12 @@ app.post('/users', (req, res) => {
 //Allow users to update their user info (username, password, email, date of birth)
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
 
-  let hashedPassword = Users.hashPassword(req.body.Password);
+  // let hashedPassword = Users.hashPassword(req.body.Password); ??
 
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
-      Password: hashedPassword, 
+      Password: req.body.Password, // hashedPassword??
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
@@ -283,6 +280,6 @@ app.get('/documentation', (req, res) => {
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+ console.log('Listening on Port: ' + port);
 });
 

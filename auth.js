@@ -12,7 +12,7 @@ let generateJWTToken = (user)=> {
     });
 }
 
-// Post Login to newly created login endpoint
+// Post Login to login endpoint
 module.exports = (router) => {
     router.post('/login', (req, res) => {
         passport.authenticate('local', { session: false }, (error, user, info) => {
