@@ -20,8 +20,8 @@ let movieSchema = mongoose.Schema ({
 // to return just director's name + bio: ?
 let directorSchema = mongoose.Schema ({
     Director: {
-        name: {type: String, required: true},
-        Bio: {type: String, required: true},
+        name: String,
+        Bio: String
     }
 });
 
@@ -33,15 +33,13 @@ let userSchema = mongoose.Schema ({
     FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
 
-
 userSchema.statics.hashPassword = (password) => {
     return bcrypt.hashSync(password, 10);
-  };
+};
   
-  userSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.Password);
-  };
-
+};
 
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);

@@ -5,9 +5,9 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Director = Models.Director
 
-mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express'),
 app = express();
@@ -118,11 +118,11 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
 });
 
 
-// additional:  return only name and bio of director / Does not work right
+// additional:  return only name and bio of director / logic does not yet do it ...
 app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Director.find( { "Director.name": req.params.name })
+  Director.findOne( { "Director.name": req.params.name })
   .then( (directorsbio) => {
-    res.json(directorsbio);
+    res.json(directorsbio.name + ' ' + directorsbio.Bio);
   })
   .catch((err) => {
     console.error(err);
@@ -152,6 +152,7 @@ app.post('/users', (req, res) => {
     }
   
     let hashedPassword = Users.hashPassword(req.body.Password);
+
     Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
@@ -181,19 +182,22 @@ app.post('/users', (req, res) => {
 
 //Allow users to update their user info (username, password, email, date of birth)
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
+
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword, 
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
   },
-  { new: true }, 
+  { new: true }, //specifies proceeding callback is returned
   (err, updatedUser) => {
     if(err) {
       console.error(err);
-      res.status(500).send('Error: ' + err);
+      res.status(500).send('Something went wrong. Error: ' + err);
     } else {
       res.json(updatedUser);
     }
