@@ -136,19 +136,19 @@ app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: fa
 // Allow new users to register
 app.post('/users', (req, res) => {
    
-  [  
-    check('Username', 'Username is required').isLength({min: 5}),
-    check('Username', 'Non alphanumeric characters are not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
-  ], (req, res) => {
+  // [  
+  //   check('Username', 'Username is required').isLength({min: 5}),
+  //   check('Username', 'Non alphanumeric characters are not allowed.').isAlphanumeric(),
+  //   check('Password', 'Password is required').not().isEmpty(),
+  //   check('Email', 'Email does not appear to be valid').isEmail()
+  // ], (req, res) => {
 
-    // check validation object for errors
-    let errors = validationResult(req);
+  //   // check validation object for errors
+  //   let errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
+  //   if (!errors.isEmpty()) {
+  //     return res.status(422).json({ errors: errors.array() });
+  //   }
   
     let hashedPassword = Users.hashPassword(req.body.Password);
 
