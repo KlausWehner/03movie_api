@@ -173,7 +173,7 @@ app.post('/users',
       console.error(error);
       res.status(500).send('Error: ' + error);
     });
-  }
+  
 });
 
 
@@ -280,6 +280,6 @@ app.get('/documentation', (req, res) => {
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port: ' + port);
+ console.log('APP Listening on Port: ' + port);
 });
 
