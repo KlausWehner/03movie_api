@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); //hashing the password
 
 let movieSchema = mongoose.Schema ({
     Title: {type: String, required: true},
