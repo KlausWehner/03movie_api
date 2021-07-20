@@ -7,8 +7,6 @@ const Director = Models.Director
 
 // mongoose.connect('mongodb://localhost:27017/flixMoviesDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// mongoose.connect('mongodb+srv://MorningGlory2021:MorningGlory2021@klauscluster.g0vbh.mongodb.net/flixMoviesDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express'),
@@ -65,7 +63,7 @@ app.get('/', (req, res) => {
 
 // Return a list of ALL movies to the user
 app.get('/movies', 
-      passport.authenticate('jwt', { session: false }),
+      // passport.authenticate('jwt', { session: false }),
       (req, res) => {
   Movies.find()
   .then((allmovies) => {
