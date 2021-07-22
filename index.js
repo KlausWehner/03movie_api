@@ -89,11 +89,11 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
 });
   
 
-// Return all movies of a genre by name/title (e.g., “Thriller”)
+// Return genre info by genre name
 app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.find( { "Genre.name": req.params.name })
+  Movies.findOne( { "Genre.name": req.params.name })
   .then( (movie) => {
-    res.json(movie.Genre.name);
+    res.json(movie.Genre);
   })
   .catch((err) => {
     console.error(err);
@@ -101,18 +101,6 @@ app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }),
   });
 });
 
-
-// //Director by name
-// app.get('/movies/director/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   Movies.find( { "Director.name": req.params.name })
-//   .then( (requesteddirector) => {
-//     res.json(requesteddirector.Director);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//     res.status(500).send("Error: " + err);
-//   });
-// });
 
 // // Director by Name
 app.get('/movies/director/:name', passport.authenticate('jwt', { session: false}), (req,res) => {
@@ -126,18 +114,7 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false}
   })
   });
 
-// additional:  return only name and bio of director / logic does not yet do it ...
-// app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   Director.findOne( { "Director.name": req.params.name })
-//   .then( (directorsbio) => {
-//     res.json(directorsbio.name + ' ' + directorsbio.Bio);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//     res.status(500).send("Error: " + err);
-//   });
-// });
-
+  
 // REQUESTS TO USERS
 
 // Allow new users to register
