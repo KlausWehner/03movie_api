@@ -93,7 +93,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
 app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find( { "Genre.name": req.params.name })
   .then( (requestedgenre) => {
-    res.json(requestedgenre);
+    res.json(requestedgenre.Genre);
   })
   .catch((err) => {
     console.error(err);
@@ -102,11 +102,11 @@ app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }),
 });
 
 
-//returns all movies of one director 
+//Director by name
 app.get('/movies/director/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find( { "Director.name": req.params.name })
   .then( (requesteddirector) => {
-    res.json(requesteddirector);
+    res.json(requesteddirector.Director);
   })
   .catch((err) => {
     console.error(err);
@@ -114,20 +114,29 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
   });
 });
 
+// // Director by Name
+// app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false}), (req,res) => {
+//   Movies.findOne({ 'Director.Name': req.params.Name})
+//   .then((movie) => {
+//   res.json(movie.Director);
+//   })
+//   .catch((err) => {
+//   console.error(err);
+//   res.status(500).send('Error: ' + err);
+//   })
+//   });
 
 // additional:  return only name and bio of director / logic does not yet do it ...
-app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Director.findOne( { "Director.name": req.params.name })
-  .then( (directorsbio) => {
-    res.json(directorsbio.name + ' ' + directorsbio.Bio);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error: " + err);
-  });
-});
-
-
+// app.get('/movies/directorsBio/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   Director.findOne( { "Director.name": req.params.name })
+//   .then( (directorsbio) => {
+//     res.json(directorsbio.name + ' ' + directorsbio.Bio);
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//     res.status(500).send("Error: " + err);
+//   });
+// });
 
 // REQUESTS TO USERS
 
