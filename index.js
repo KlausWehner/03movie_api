@@ -93,7 +93,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
 app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find( { "Genre.name": req.params.name })
   .then( (movie) => {
-    res.json(movie.Genre);
+    res.json(movie.Genre.name);
   })
   .catch((err) => {
     console.error(err);
