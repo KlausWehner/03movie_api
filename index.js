@@ -104,7 +104,7 @@ app.get('/movies/genre/:name', passport.authenticate('jwt', { session: false }),
 
 // // Director by Name
 app.get('/movies/director/:name', passport.authenticate('jwt', { session: false}), (req,res) => {
-  Movies.findOne({ 'Director.Name': req.params.Name})
+  Movies.findOne({ 'Director.Name': req.params.name})
   .then((movie) => {
   res.json(movie.Director);
   })
